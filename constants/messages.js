@@ -11,4 +11,5 @@ export const ERROR_MESSAGES = {
   NO_USERNAME: "Error: --username argument was not specified",
   INVALID_INPUT: "Invalid input",
   OPERATION_FAILED: "Operation failed",
+  CD_NO_PATH: "Error: Path argument is required for cd command",
 };
