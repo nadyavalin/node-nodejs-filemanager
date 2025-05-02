@@ -1,9 +1,10 @@
+import { createCliInterface, handleExit, userPrompt } from "./cli/cli.js";
 import { getUserName } from "./utils/getUserName.js";
-import { createCliInterface, userPrompt, handleExit } from "./utils/cli.js";
-import { MESSAGES } from "./utils/messages.js";
+import { MESSAGES } from "./constants/messages.js";
 
 const userName = getUserName();
 console.log(MESSAGES.WELCOME(userName));
+console.log(MESSAGES.CURRENT_DIR(process.cwd()));
 
 const readLine = createCliInterface();
 

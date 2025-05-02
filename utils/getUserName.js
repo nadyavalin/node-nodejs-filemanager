@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from "./messages.js";
+import { ERROR_MESSAGES } from "../constants/messages.js";
 
 export function getUserName() {
   const args = process.argv.slice(2);

@@ -1,5 +1,5 @@
 import readline from "readline";
-import { MESSAGES } from "./messages.js";
+import { MESSAGES } from "../constants/messages.js";
 
 export function createCliInterface() {
   return readline.createInterface({
@@ -8,18 +8,13 @@ export function createCliInterface() {
   });
 }
 
-function exitProgram(rl, username) {
-  console.log(MESSAGES.FAREWELL(username));
-  rl.close();
-  process.exit(0);
-}
-
 export function userPrompt(rl, username, callback) {
   rl.question("> ", (input) => {
     if (input.trim() === ".exit") {
       exitProgram(rl, username);
     }
     callback(input);
+    console.log(MESSAGES.CURRENT_DIR(process.cwd()));
     userPrompt(rl, username, callback);
   });
 }
@@ -28,4 +23,10 @@ export function handleExit(rl, username) {
   rl.on("SIGINT", () => {
     exitProgram(rl, username);
   });
+}
+
+function exitProgram(rl, username) {
+  console.log(MESSAGES.FAREWELL(username));
+  rl.close();
+  process.exit(0);
 }
