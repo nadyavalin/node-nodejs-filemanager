@@ -8,7 +8,10 @@ export function createCliInterface() {
   });
 }
 
-export function userPrompt(rl, username, callback) {
+export function userPrompt(rl, username, callback, isFirstPrompt = false) {
+  if (isFirstPrompt) {
+    console.log(MESSAGES.COMMAND_PROMPT);
+  }
   rl.question("> ", (input) => {
     if (input.trim() === ".exit") {
       exitProgram(rl, username);

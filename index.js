@@ -1,7 +1,8 @@
-import { createCliInterface, handleExit, userPrompt } from "./cli/cli.js";
-import { getUserName } from "./utils/getUserName.js";
-import { MESSAGES } from "./constants/messages.js";
 import os from "os";
+import { getUserName } from "./utils/getUserName.js";
+import { createCliInterface, handleExit, userPrompt } from "./cli/cli.js";
+import { processCommand } from "./commands/commandProcessor.js";
+import { MESSAGES } from "./constants/messages.js";
 
 process.chdir(os.homedir());
 
@@ -11,8 +12,14 @@ console.log(MESSAGES.CURRENT_DIR(process.cwd()));
 
 const readLine = createCliInterface();
 
-userPrompt(readLine, userName, (input) => {
-  console.log(MESSAGES.INPUT_ECHO(input));
-});
+userPrompt(
+  readLine,
+  userName,
+  (input) => {
+    const result = processCommand(input);
+    console.log(result.message);
+  },
+  true
+);
 
 handleExit(readLine, userName);
