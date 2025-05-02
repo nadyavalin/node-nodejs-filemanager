@@ -1,5 +1,5 @@
 export const MESSAGES = {
-  WELCOME: (userName) => `Welcome to the File Manager, ${userName}!`,
+  WELCOME: (username) => `Welcome to the File Manager, ${username}!`,
   FAREWELL: (username) =>
     `Thank you for using File Manager, ${username}, goodbye!`,
   INPUT_ECHO: (input) => `Your input: ${input}`,
