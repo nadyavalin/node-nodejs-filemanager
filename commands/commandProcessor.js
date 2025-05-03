@@ -1,4 +1,5 @@
 import { ERROR_MESSAGES } from "../constants/messages.js";
+import { parseRnArgs } from "../utils/parseRnArgs.js";
 import { cd } from "./cd.js";
 import { up } from "./up.js";
 import { ls } from "./ls.js";
@@ -7,7 +8,7 @@ import { add } from "./add.js";
 import { mkdir } from "./mkdir.js";
 import { rn } from "./rn.js";
 import { cp } from "./cp.js";
-import { parseRnArgs } from "../utils/parseRnArgs.js";
+import { mv } from "./mv.js";
 
 export async function processCommand(input) {
   const parts = input.trim().split(/\s+/);
@@ -40,6 +41,9 @@ export async function processCommand(input) {
     case "cp":
       const cpArgs = parseRnArgs(input.replace(/^cp\s+/, ""));
       return await cp(cpArgs.length === 2 ? cpArgs : []);
+    case "mv":
+      const mvArgs = parseRnArgs(input.replace(/^mv\s+/, ""));
+      return await mv(mvArgs.length === 2 ? mvArgs : []);
     default:
       return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };
   }

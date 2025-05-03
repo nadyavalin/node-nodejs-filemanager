@@ -12,6 +12,8 @@ export const MESSAGES = {
   SUCCESS_RENAME_FILE: (newname) =>
     `File was renamed to "${newname}" successfully`,
   SUCCESS_COPY_FILE: (newname) => `File "${newname}" was copied successfully`,
+  SUCCESS_MOVE_FILE: (filename, dirname) =>
+    `File "${filename}" was moved to "${dirname}" successfully`,
 };
 
 export const ERROR_MESSAGES = {

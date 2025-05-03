@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { ERROR_MESSAGES, MESSAGES } from "../constants/messages.js";
 
-export async function cp(inputArgs) {
+export async function mv(inputArgs) {
   if (inputArgs.length !== 2) {
     return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };
   }
@@ -67,10 +67,20 @@ export async function cp(inputArgs) {
       });
 
       writeStream.on("finish", () => {
-        resolve({
-          success: true,
-          message: MESSAGES.SUCCESS_COPY_FILE(fileName),
-        });
+        fs.promises
+          .unlink(absoluteSourcePath)
+          .then(() => {
+            resolve({
+              success: true,
+              message: MESSAGES.SUCCESS_MOVE_FILE(fileName, dirName),
+            });
+          })
+          .catch(() => {
+            resolve({
+              success: false,
+              message: ERROR_MESSAGES.OPERATION_FAILED,
+            });
+          });
       });
 
       writeStream.on("error", () => {
