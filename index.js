@@ -8,7 +8,8 @@ process.chdir(os.homedir());
 
 const userName = getUserName();
 console.log(MESSAGES.WELCOME(userName));
-console.log(MESSAGES.CURRENT_DIR(process.cwd()));
+let currentDir = process.cwd();
+console.log(MESSAGES.CURRENT_DIR(currentDir));
 
 const readLine = createCliInterface();
 
@@ -19,6 +20,10 @@ userPrompt(
     const result = await processCommand(input);
     if (result && result.message) {
       console.log(result.message);
+      if (result.newDir) {
+        currentDir = result.newDir;
+        console.log(MESSAGES.CURRENT_DIR(currentDir));
+      }
     } else if (result && result.content) {
       console.log(result.content);
     }

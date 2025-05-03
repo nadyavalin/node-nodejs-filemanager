@@ -12,6 +12,8 @@ import { mv } from "./fs/mv.js";
 import { rm } from "./fs/rm.js";
 import { eol } from "./os/eol.js";
 import { cpus } from "./os/cpus.js";
+import { homedir } from "./os/homedir.js";
+import { username } from "./os/username.js";
 
 export async function processCommand(input) {
   const parts = input.trim().split(/\s+/);
@@ -59,6 +61,10 @@ export async function processCommand(input) {
           return await eol();
         case "--cpus":
           return await cpus();
+        case "--homedir":
+          return await homedir();
+        case "--username":
+          return await username();
         default:
           return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };
       }
