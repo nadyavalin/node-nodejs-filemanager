@@ -3,9 +3,11 @@ import { cd } from "./cd.js";
 import { up } from "./up.js";
 import { ls } from "./ls.js";
 import { cat } from "./cat.js";
+import { add } from "./add.js";
 
 export async function processCommand(input) {
   const [command, ...args] = input.trim().split(/\s+/);
+  const fullArgs = args.join(" ").trim();
 
   if (!command) {
     return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };
@@ -15,13 +17,15 @@ export async function processCommand(input) {
 
   switch (commandLower) {
     case "cd":
-      return await cd(args);
+      return await cd(fullArgs ? [fullArgs] : []);
     case "up":
-      return await up(args);
+      return await up([]);
     case "ls":
-      return await ls(args);
+      return await ls([]);
     case "cat":
-      return await cat(args);
+      return await cat(fullArgs ? [fullArgs] : []);
+    case "add":
+      return await add(fullArgs ? [fullArgs] : []);
     default:
       return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };
   }

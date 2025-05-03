@@ -29,8 +29,12 @@ export async function ls(inputArgs) {
     const tableData = [];
     const allItems = [...directories, ...files];
     allItems.forEach((item, _) => {
+      let displayName = item;
+      if (item.length > 30) {
+        displayName = item.substring(0, 27) + "...";
+      }
       const type = directories.includes(item) ? "directory" : "file";
-      tableData.push({ Name: item, Type: type });
+      tableData.push({ Name: displayName, Type: type });
     });
 
     if (tableData.length > 0) {

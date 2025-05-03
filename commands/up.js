@@ -7,8 +7,7 @@ export async function up(inputArgs) {
     return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };
   }
 
-  const currentDir = process.cwd();
-  const parentPath = path.resolve(currentDir, "..");
+  const parentPath = path.resolve(process.cwd(), "..");
 
   try {
     await fs.access(parentPath);

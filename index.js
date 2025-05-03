@@ -17,7 +17,7 @@ userPrompt(
   userName,
   async (input) => {
     const result = await processCommand(input);
-    if (result && !result.success && result.message) {
+    if (result && result.message) {
       console.log(result.message);
     } else if (result && result.content) {
       console.log(result.content);

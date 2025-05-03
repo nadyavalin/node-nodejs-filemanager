@@ -7,9 +7,8 @@ export async function cd(inputArgs) {
     return { success: false, message: ERROR_MESSAGES.CD_NO_PATH };
   }
 
-  const currentDir = process.cwd();
   const targetPath = inputArgs.join(" ").replace(/^"|"$/g, "").trim();
-  const absolutePath = path.resolve(currentDir, targetPath);
+  const absolutePath = path.resolve(process.cwd(), targetPath);
 
   try {
     await fs.access(absolutePath);
