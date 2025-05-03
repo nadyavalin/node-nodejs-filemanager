@@ -16,6 +16,8 @@ import { homedir } from "./os/homedir.js";
 import { username } from "./os/username.js";
 import { architecture } from "./os/architecture.js";
 import { hash } from "./fs/hash.js";
+import { compress } from "./fs/compress.js";
+import { decompress } from "./fs/decompress.js";
 
 export async function processCommand(input) {
   const parts = input.trim().split(/\s+/);
@@ -55,6 +57,10 @@ export async function processCommand(input) {
       return await rm(fullArgs ? [fullArgs] : []);
     case "hash":
       return await hash(args);
+    case "compress":
+      return await compress(args);
+    case "decompress":
+      return await decompress(args);
     case "os":
       if (args.length !== 1) {
         return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };

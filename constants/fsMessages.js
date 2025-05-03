@@ -41,4 +41,11 @@ export const ERROR_MESSAGES = {
   FAILED_WRITE_DEST_FILE: "Failed to write to destination file",
   NO_FILE_TO_HASH: "Invalid input. Usage: hash path_to_file",
   FAILED_CALC_HASH: (error) => `Failed to calculate hash: ${error.message}`,
+  NO_COMPRESS_ARGS:
+    "Invalid input. Usage: compress source_path destination_path",
+  FAILED_COMPRESS: (error) => `Failed to compress file: ${error.message}`,
+  NO_DECOMPRESS_ARGS:
+    "Invalid input. Usage: decompress source_path destination_path",
+  FAILED_DECOMPRESS: (error) => `Failed to decompress file: ${error.message}`,
+  NOT_BR: "Invalid file extension. Expected .br file for decompression.",
 };
