@@ -15,9 +15,13 @@ const readLine = createCliInterface();
 userPrompt(
   readLine,
   userName,
-  (input) => {
-    const result = processCommand(input);
-    console.log(result.message);
+  async (input) => {
+    const result = await processCommand(input);
+    if (result && !result.success && result.message) {
+      console.log(result.message);
+    } else if (result && result.content) {
+      console.log(result.content);
+    }
   },
   true
 );
