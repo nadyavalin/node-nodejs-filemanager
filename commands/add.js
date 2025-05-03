@@ -9,7 +9,7 @@ export async function add(inputArgs) {
   const fileName = inputArgs[0].replace(/^"|"$/g, "").trim();
 
   if (fileName.includes(" ")) {
-    return { success: false, message: ERROR_MESSAGES.NO_SPACES };
+    return { success: false, message: ERROR_MESSAGES.NO_SPACES("File") };
   }
 
   const filePath = `${process.cwd()}/${fileName}`;
@@ -17,12 +17,12 @@ export async function add(inputArgs) {
   try {
     try {
       await fs.access(filePath);
-      return { success: false, message: ERROR_MESSAGES.EXISTS };
+      return { success: false, message: ERROR_MESSAGES.EXISTS("File") };
     } catch {
       await fs.writeFile(filePath, "", { flag: "wx" });
       return {
         success: true,
-        message: MESSAGES.SUCCESS_CREATE(fileName),
+        message: MESSAGES.SUCCESS_CREATE("File", fileName),
       };
     }
   } catch (error) {

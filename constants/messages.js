@@ -5,7 +5,7 @@ export const MESSAGES = {
   INPUT_ECHO: (input) => `Your input: ${input}`,
   CURRENT_DIR: (path) => `You are currently in ${path}`,
   COMMAND_PROMPT: "Type a command (or .exit to quit):",
-  SUCCESS_CREATE: (filename) => `File "${filename}" created successfully`,
+  SUCCESS_CREATE: (type, filename) => `${type} "${filename}" created successfully`,
 };
 
 export const ERROR_MESSAGES = {
@@ -13,6 +13,6 @@ export const ERROR_MESSAGES = {
   INVALID_INPUT: "Invalid input",
   OPERATION_FAILED: "Operation failed",
   CD_NO_PATH: "Error: Path argument is required for cd command",
-  NO_SPACES: "File name cannot contain spaces",
-  EXISTS: "File already exists",
+  NO_SPACES: (type) => `${type} name cannot contain spaces`,
+  EXISTS: (type) => `${type} already exists`,
 };
