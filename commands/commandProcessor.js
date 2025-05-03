@@ -1,15 +1,17 @@
 import { ERROR_MESSAGES } from "../constants/messages.js";
 import { parseRnArgs } from "../utils/parseRnArgs.js";
-import { cd } from "./cd.js";
-import { up } from "./up.js";
-import { ls } from "./ls.js";
-import { cat } from "./cat.js";
-import { add } from "./add.js";
-import { mkdir } from "./mkdir.js";
-import { rn } from "./rn.js";
-import { cp } from "./cp.js";
-import { mv } from "./mv.js";
-import { rm } from "./rm.js";
+import { cd } from "./fs/cd.js";
+import { up } from "./fs/up.js";
+import { ls } from "./fs/ls.js";
+import { cat } from "./fs/cat.js";
+import { add } from "./fs/add.js";
+import { mkdir } from "./fs/mkdir.js";
+import { rn } from "./fs/rn.js";
+import { cp } from "./fs/cp.js";
+import { mv } from "./fs/mv.js";
+import { rm } from "./fs/rm.js";
+import { eol } from "./os/eol.js";
+import { cpus } from "./os/cpus.js";
 
 export async function processCommand(input) {
   const parts = input.trim().split(/\s+/);
@@ -47,6 +49,19 @@ export async function processCommand(input) {
       return await mv(mvArgs.length === 2 ? mvArgs : []);
     case "rm":
       return await rm(fullArgs ? [fullArgs] : []);
+    case "os":
+      if (args.length !== 1) {
+        return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };
+      }
+      const flag = args[0];
+      switch (flag) {
+        case "--EOL":
+          return await eol();
+        case "--cpus":
+          return await cpus();
+        default:
+          return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };
+      }
     default:
       return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };
   }

@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import path from "path";
-import { ERROR_MESSAGES, MESSAGES } from "../constants/messages.js";
+import { ERROR_MESSAGES, MESSAGES } from "../../constants/messages.js";
 
 export async function rm(inputArgs) {
   if (inputArgs.length !== 1) {

@@ -1,5 +1,5 @@
 import fs from "fs";
-import { ERROR_MESSAGES } from "../constants/messages.js";
+import { ERROR_MESSAGES } from "../../constants/messages.js";
 
 export async function cat(inputArgs) {
   if (inputArgs.length !== 1) {
