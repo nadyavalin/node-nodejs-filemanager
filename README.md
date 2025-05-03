@@ -79,6 +79,7 @@ Replace `your_username` with your preferred username.
     - Sorted alphabetically, folders first.
     - Includes file/folder names (with extensions for files) and type indication.
     - Example output:
+
       ![image](https://github.com/user-attachments/assets/35e1e566-5596-4e1a-a8ba-a8501b9a470d)
 
 ### Basic File Operations
