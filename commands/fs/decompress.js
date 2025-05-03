@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import zlib from "zlib";
 import { ERROR_MESSAGES } from "../../constants/fsMessages.js";
+import { pipeline } from "stream";
 
 export async function decompress(args) {
   if (args.length !== 2) {
@@ -16,36 +17,78 @@ export async function decompress(args) {
   );
   const absoluteSourcePath = path.resolve(process.cwd(), sourcePath);
   const absoluteDestDir = path.resolve(process.cwd(), destDir);
-
-  const sourceFileName = path.basename(sourcePath);
-  if (!sourceFileName.endsWith(".br")) {
+  const { name, ext } = path.parse(sourcePath);
+  if (ext !== ".br") {
     return {
       success: false,
       message: ERROR_MESSAGES.NOT_BR,
     };
   }
-  const decompressedFileName = sourceFileName.slice(0, -3);
-  const absoluteDestPath = path.join(absoluteDestDir, decompressedFileName);
 
   return new Promise((resolve) => {
     const readStream = fs.createReadStream(absoluteSourcePath);
-    const writeStream = fs.createWriteStream(absoluteDestPath);
     const decompress = zlib.createBrotliDecompress();
+    let headerLength = 0;
+    let headerData = Buffer.alloc(0);
+    let headerProcessed = false;
+    let dataBuffer = Buffer.alloc(0);
 
-    readStream.pipe(decompress).pipe(writeStream);
+    readStream.on("data", (chunk) => {
+      if (headerProcessed) {
+        dataBuffer = Buffer.concat([dataBuffer, chunk]);
+        return;
+      }
 
-    writeStream.on("finish", () => {
-      resolve({
-        success: true,
-        message: `File ${sourcePath} decompressed to ${destDir}/${decompressedFileName}`,
-      });
-    });
+      headerData = Buffer.concat([headerData, chunk]);
 
-    writeStream.on("error", (error) => {
-      resolve({
-        success: false,
-        message: ERROR_MESSAGES.FAILED_DECOMPRESS(error),
-      });
+      if (headerLength === 0 && headerData.length >= 1) {
+        headerLength = headerData[0];
+      }
+
+      if (headerLength > 0 && headerData.length >= headerLength + 1) {
+        const header = headerData.slice(1, headerLength + 1).toString();
+        const [length, extension] = header.split(":");
+        if (!header.includes(":") || parseInt(length) !== extension.length) {
+          resolve({
+            success: false,
+            message: ERROR_MESSAGES.NOT_HEADER_BR,
+          });
+          readStream.destroy();
+          return;
+        }
+
+        const decompressedFileName = `${name}${extension}`;
+        const absoluteDestPath = path.join(
+          absoluteDestDir,
+          decompressedFileName
+        );
+        const writeStream = fs.createWriteStream(absoluteDestPath);
+
+        const remainingData = headerData.slice(headerLength + 1);
+        if (remainingData.length > 0) {
+          dataBuffer = Buffer.concat([dataBuffer, remainingData]);
+        }
+
+        const remainingStream = fs.createReadStream(absoluteSourcePath, {
+          start: headerLength + 1,
+        });
+
+        pipeline(remainingStream, decompress, writeStream, (err) => {
+          if (err) {
+            resolve({
+              success: false,
+              message: ERROR_MESSAGES.FAILED_DECOMPRESS(err),
+            });
+          } else {
+            resolve({
+              success: true,
+              message: `File ${sourcePath} decompressed to ${destDir}/${decompressedFileName}`,
+            });
+          }
+        });
+
+        headerProcessed = true;
+      }
     });
 
     readStream.on("error", (error) => {
@@ -55,11 +98,13 @@ export async function decompress(args) {
       });
     });
 
-    decompress.on("error", (error) => {
-      resolve({
-        success: false,
-        message: ERROR_MESSAGES.FAILED_DECOMPRESS(error),
-      });
+    readStream.on("end", () => {
+      if (!headerProcessed) {
+        resolve({
+          success: false,
+          message: ERROR_MESSAGES.NOT_HEADER_BR,
+        });
+      }
     });
   });
 }

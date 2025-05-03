@@ -48,4 +48,5 @@ export const ERROR_MESSAGES = {
     "Invalid input. Usage: decompress source_path destination_path",
   FAILED_DECOMPRESS: (error) => `Failed to decompress file: ${error.message}`,
   NOT_BR: "Invalid file extension. Expected .br file for decompression.",
+  NOT_HEADER_BR: "Invalid compressed file format: header not found",
 };
