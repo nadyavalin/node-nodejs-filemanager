@@ -2,7 +2,7 @@ import os from "os";
 import { getUserName } from "./utils/getUserName.js";
 import { createCliInterface, handleExit, userPrompt } from "./cli/cli.js";
 import { processCommand } from "./commands/commandProcessor.js";
-import { MESSAGES } from "./constants/messages.js";
+import { MESSAGES } from "./constants/fsMessages.js";
 
 process.chdir(os.homedir());
 

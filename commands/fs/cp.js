@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import { ERROR_MESSAGES, MESSAGES } from "../../constants/messages.js";
+import { ERROR_MESSAGES, MESSAGES } from "../../constants/fsMessages.js";
 
 export async function cp(inputArgs) {
   if (inputArgs.length !== 2) {

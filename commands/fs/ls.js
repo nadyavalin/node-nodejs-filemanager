@@ -1,6 +1,6 @@
 import path from "path";
 import { promises as fs } from "fs";
-import { ERROR_MESSAGES } from "../../constants/messages.js";
+import { ERROR_MESSAGES } from "../../constants/fsMessages.js";
 
 export async function ls(inputArgs) {
   if (inputArgs.length > 0) {

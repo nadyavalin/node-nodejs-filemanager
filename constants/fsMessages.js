@@ -39,4 +39,6 @@ export const ERROR_MESSAGES = {
   NOT_EXISTS_SOURCE_DIR: "Destination directory does not exist",
   FAILED_READ_SOURCE_FILE: "Failed to read source file",
   FAILED_WRITE_DEST_FILE: "Failed to write to destination file",
+  NO_FILE_TO_HASH: "Invalid input. Usage: hash path_to_file",
+  FAILED_CALC_HASH: (error) => `Failed to calculate hash: ${error.message}`,
 };

@@ -1,5 +1,5 @@
 import fs from "fs/promises";
-import { ERROR_MESSAGES, MESSAGES } from "../../constants/messages.js";
+import { ERROR_MESSAGES, MESSAGES } from "../../constants/fsMessages.js";
 
 export async function mkdir(inputArgs) {
   if (inputArgs.length !== 1) {

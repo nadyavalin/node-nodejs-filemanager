@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from "../constants/messages.js";
+import { ERROR_MESSAGES } from "../constants/fsMessages.js";
 import { parseRnArgs } from "../utils/parseRnArgs.js";
 import { cd } from "./fs/cd.js";
 import { up } from "./fs/up.js";
@@ -14,6 +14,8 @@ import { eol } from "./os/eol.js";
 import { cpus } from "./os/cpus.js";
 import { homedir } from "./os/homedir.js";
 import { username } from "./os/username.js";
+import { architecture } from "./os/architecture.js";
+import { hash } from "./fs/hash.js";
 
 export async function processCommand(input) {
   const parts = input.trim().split(/\s+/);
@@ -51,6 +53,8 @@ export async function processCommand(input) {
       return await mv(mvArgs.length === 2 ? mvArgs : []);
     case "rm":
       return await rm(fullArgs ? [fullArgs] : []);
+    case "hash":
+      return await hash(args);
     case "os":
       if (args.length !== 1) {
         return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };
@@ -65,6 +69,8 @@ export async function processCommand(input) {
           return await homedir();
         case "--username":
           return await username();
+        case "--architecture":
+          return await architecture();
         default:
           return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };
       }

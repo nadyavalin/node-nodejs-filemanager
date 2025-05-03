@@ -1,5 +1,6 @@
 import os from "os";
 import { MHZ_TO_GHZ } from "../../constants/constants.js";
+import { MESSAGES } from "../../constants/osMessages.js";
 
 export async function cpus() {
   const cpuList = os.cpus();
@@ -14,6 +15,6 @@ export async function cpus() {
 
   return {
     success: true,
-    message: `Total CPUs: ${cpuCount}\n${cpuInfo}`,
+    message: MESSAGES.CPU_INFO(cpuCount, cpuInfo),
   };
 }
