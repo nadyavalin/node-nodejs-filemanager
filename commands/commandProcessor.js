@@ -9,6 +9,7 @@ import { mkdir } from "./mkdir.js";
 import { rn } from "./rn.js";
 import { cp } from "./cp.js";
 import { mv } from "./mv.js";
+import { rm } from "./rm.js";
 
 export async function processCommand(input) {
   const parts = input.trim().split(/\s+/);
@@ -44,6 +45,8 @@ export async function processCommand(input) {
     case "mv":
       const mvArgs = parseRnArgs(input.replace(/^mv\s+/, ""));
       return await mv(mvArgs.length === 2 ? mvArgs : []);
+    case "rm":
+      return await rm(fullArgs ? [fullArgs] : []);
     default:
       return { success: false, message: ERROR_MESSAGES.INVALID_INPUT };
   }

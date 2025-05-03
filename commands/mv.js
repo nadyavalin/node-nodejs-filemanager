@@ -23,7 +23,12 @@ export async function mv(inputArgs) {
         };
       }
     } catch {
-      return { success: false, message: ERROR_MESSAGES.NOT_EXISTS_SOURCE_FILE };
+      return {
+        success: false,
+        message: ERROR_MESSAGES.NOT_EXISTS_SOURCE_FILE(
+          path.basename(absoluteSourcePath)
+        ),
+      };
     }
 
     try {

@@ -14,6 +14,7 @@ export const MESSAGES = {
   SUCCESS_COPY_FILE: (newname) => `File "${newname}" was copied successfully`,
   SUCCESS_MOVE_FILE: (filename, dirname) =>
     `File "${filename}" was moved to "${dirname}" successfully`,
+  SUCCESS_DELETE: (path) => `File "${path}" was deleted successfully`,
 };
 
 export const ERROR_MESSAGES = {
@@ -31,7 +32,9 @@ export const ERROR_MESSAGES = {
   CORRECT_TYPE: "Path must be a file, not a directory",
   EXISTS_COPY_FILE: (filename, dirname) =>
     `File with name "${filename}" already exists in the directory "${dirname}"`,
-  NOT_EXISTS_SOURCE_FILE: "Source file does not exist",
+  NOT_EXISTS_SOURCE_FILE: (filename) =>
+    `Source file "${filename}" does not exist`,
+  NOT_EXISTS_FILE: (filename) => `File "${filename}" does not exist`,
   NOT_DIR: "Destination must be a directory",
   NOT_EXISTS_SOURCE_DIR: "Destination directory does not exist",
   FAILED_READ_SOURCE_FILE: "Failed to read source file",
