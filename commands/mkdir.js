@@ -9,7 +9,7 @@ export async function mkdir(inputArgs) {
   const dirName = inputArgs[0].replace(/^"|"$/g, "").trim();
 
   if (dirName.includes(" ")) {
-    return { success: false, message: ERROR_MESSAGES.NO_SPACES("Directory") };
+    return { success: false, message: ERROR_MESSAGES.NO_SPACES_IN_DIR };
   }
 
   const dirPath = `${process.cwd()}/${dirName}`;
@@ -17,12 +17,12 @@ export async function mkdir(inputArgs) {
   try {
     try {
       await fs.access(dirPath);
-      return { success: false, message: ERROR_MESSAGES.EXISTS("Directory") };
+      return { success: false, message: ERROR_MESSAGES.EXISTS_DIR(dirName) };
     } catch {
       await fs.mkdir(dirPath);
       return {
         success: true,
-        message: MESSAGES.SUCCESS_CREATE("Directory", dirName),
+        message: MESSAGES.SUCCESS_CREATE_DIR(dirName),
       };
     }
   } catch (error) {
