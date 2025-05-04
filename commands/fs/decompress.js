@@ -62,35 +62,50 @@ export async function decompress(args) {
           absoluteDestDir,
           decompressedFileName
         );
-        const writeStream = fs.createWriteStream(absoluteDestPath);
 
-        const remainingData = headerData.slice(headerLength + 1);
-        if (remainingData.length > 0) {
-          dataBuffer = Buffer.concat([dataBuffer, remainingData]);
-        }
-
-        const remainingStream = fs.createReadStream(absoluteSourcePath, {
-          start: headerLength + 1,
-        });
-
-        pipeline(remainingStream, decompress, writeStream, (err) => {
-          if (err) {
+        fs.promises
+          .access(absoluteDestPath)
+          .then(() => {
             resolve({
               success: false,
-              message: ERROR_MESSAGES.FAILED_DECOMPRESS(err),
-            });
-          } else {
-            resolve({
-              success: true,
-              message: MESSAGES.SUCCESS_DECOMPRESS(
-                name + ext,
-                destDir + "\\" + decompressedFileName
+              message: ERROR_MESSAGES.EXISTS_FILE_IN_DIR(
+                decompressedFileName,
+                path.basename(absoluteDestDir)
               ),
             });
-          }
-        });
+            readStream.destroy();
+          })
+          .catch(() => {
+            const writeStream = fs.createWriteStream(absoluteDestPath);
 
-        headerProcessed = true;
+            const remainingData = headerData.slice(headerLength + 1);
+            if (remainingData.length > 0) {
+              dataBuffer = Buffer.concat([dataBuffer, remainingData]);
+            }
+
+            const remainingStream = fs.createReadStream(absoluteSourcePath, {
+              start: headerLength + 1,
+            });
+
+            pipeline(remainingStream, decompress, writeStream, (err) => {
+              if (err) {
+                resolve({
+                  success: false,
+                  message: ERROR_MESSAGES.FAILED_DECOMPRESS(err),
+                });
+              } else {
+                resolve({
+                  success: true,
+                  message: MESSAGES.SUCCESS_DECOMPRESS(
+                    name + ext,
+                    absoluteDestPath
+                  ),
+                });
+              }
+            });
+
+            headerProcessed = true;
+          });
       }
     });
 

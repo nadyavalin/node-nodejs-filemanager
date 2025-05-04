@@ -54,7 +54,7 @@ export async function mv(inputArgs) {
       await fs.promises.access(destPath);
       return {
         success: false,
-        message: ERROR_MESSAGES.EXISTS_COPY_FILE(fileName, dirName),
+        message: ERROR_MESSAGES.EXISTS_FILE_IN_DIR(fileName, dirName),
       };
     } catch {}
 

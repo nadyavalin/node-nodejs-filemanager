@@ -12,12 +12,15 @@ export async function add(inputArgs) {
     return { success: false, message: ERROR_MESSAGES.NO_SPACES_IN_FILE };
   }
 
-  const filePath = `${process.cwd()}/${fileName}`;
+  const filePath = process.cwd() + "\\" + fileName;
 
   try {
     try {
       await fs.access(filePath);
-      return { success: false, message: ERROR_MESSAGES.EXISTS_FILE(fileName) };
+      return {
+        success: false,
+        message: ERROR_MESSAGES.EXISTS_FILE(fileName),
+      };
     } catch {
       await fs.writeFile(filePath, "", { flag: "wx" });
       return {

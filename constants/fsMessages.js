@@ -18,7 +18,7 @@ export const MESSAGES = {
   SUCCESS_COMPRESS: (filename, compressedPath) =>
     `File "${filename}" was compressed to ${compressedPath} successfully`,
   SUCCESS_DECOMPRESS: (filename, destinationPath) =>
-    `File "${filename}" was decompressed to "${destinationPath}" successfully`,
+    `File "${filename}" was decompressed to ${destinationPath} successfully`,
 };
 
 export const ERROR_MESSAGES = {
@@ -29,13 +29,14 @@ export const ERROR_MESSAGES = {
   NO_SPACES_IN_FILE: `File name cannot contain spaces`,
   NO_SPACES_IN_DIR: `Directory name cannot contain spaces`,
   NO_SPACES_IN_NEW_FILE: `New file name cannot contain spaces`,
-  EXISTS_FILE: (filename) => `File with name "${filename}" already exists`,
+  EXISTS_FILE: (filename) =>
+    `File with name "${filename}" already exists`,
+  EXISTS_FILE_IN_DIR: (filename, dirname) =>
+    `File with name "${filename}" already exists in the directory "${dirname}"`,
   EXISTS_DIR: (dirname) => `Directory with name "${dirname}" already exists`,
   EXISTS_NEW_NAME_FILE: (newname) =>
     `File with name "${newname}" already exists`,
   CORRECT_TYPE: "Path must be a file, not a directory",
-  EXISTS_COPY_FILE: (filename, dirname) =>
-    `File with name "${filename}" already exists in the directory "${dirname}"`,
   NOT_EXISTS_SOURCE_FILE: (filename) =>
     `Source file "${filename}" does not exist`,
   NOT_EXISTS_FILE: (filename) => `File "${filename}" does not exist`,

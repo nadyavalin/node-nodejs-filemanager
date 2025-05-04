@@ -23,6 +23,19 @@ export async function compress(args) {
   const compressedFileName = `${name}.br`;
   const absoluteDestPath = path.join(absoluteDestDir, compressedFileName);
 
+  try {
+    await fs.promises.access(absoluteDestPath);
+    return {
+      success: false,
+      message: ERROR_MESSAGES.EXISTS_FILE_IN_DIR(
+        compressedFileName,
+        path.basename(absoluteDestDir)
+      ),
+    };
+  } catch {
+
+  }
+
   const extension = ext || "";
   const header = Buffer.from(`${extension.length}:${extension}`);
   const headerLength = Buffer.from([header.length]);
@@ -42,10 +55,7 @@ export async function compress(args) {
     writeStream.on("finish", () => {
       resolve({
         success: true,
-        message: MESSAGES.SUCCESS_COMPRESS(
-          name + ext,
-          destDir + "\\" + compressedFileName
-        ),
+        message: MESSAGES.SUCCESS_COMPRESS(name + ext, absoluteDestPath),
       });
     });
 

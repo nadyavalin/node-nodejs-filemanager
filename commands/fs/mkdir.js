@@ -12,7 +12,7 @@ export async function mkdir(inputArgs) {
     return { success: false, message: ERROR_MESSAGES.NO_SPACES_IN_DIR };
   }
 
-  const dirPath = `${process.cwd()}/${dirName}`;
+  const dirPath = process.cwd() + "\\" + dirName;
 
   try {
     try {
