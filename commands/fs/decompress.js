@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import zlib from "zlib";
 import { pipeline } from "stream";
-import { ERROR_MESSAGES } from "../../constants/fsMessages.js";
+import { MESSAGES, ERROR_MESSAGES } from "../../constants/fsMessages.js";
 
 export async function decompress(args) {
   if (args.length !== 2) {
@@ -82,7 +82,10 @@ export async function decompress(args) {
           } else {
             resolve({
               success: true,
-              message: `File ${sourcePath} decompressed to ${destDir}/${decompressedFileName}`,
+              message: MESSAGES.SUCCESS_DECOMPRESS(
+                name + ext,
+                destDir + "\\" + decompressedFileName
+              ),
             });
           }
         });

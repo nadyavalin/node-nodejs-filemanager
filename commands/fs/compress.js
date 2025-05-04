@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import zlib from "zlib";
 import { Readable } from "stream";
-import { ERROR_MESSAGES } from "../../constants/fsMessages.js";
+import { MESSAGES, ERROR_MESSAGES } from "../../constants/fsMessages.js";
 
 export async function compress(args) {
   if (args.length !== 2) {
@@ -15,6 +15,7 @@ export async function compress(args) {
   const [sourcePath, destDir] = args.map((arg) =>
     arg.replace(/^"|"$/g, "").trim()
   );
+
   const absoluteSourcePath = path.resolve(process.cwd(), sourcePath);
   const absoluteDestDir = path.resolve(process.cwd(), destDir);
 
@@ -41,7 +42,10 @@ export async function compress(args) {
     writeStream.on("finish", () => {
       resolve({
         success: true,
-        message: `File ${sourcePath} compressed to ${destDir}/${compressedFileName}`,
+        message: MESSAGES.SUCCESS_COMPRESS(
+          name + ext,
+          destDir + "\\" + compressedFileName
+        ),
       });
     });
 

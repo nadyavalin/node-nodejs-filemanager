@@ -15,6 +15,10 @@ export const MESSAGES = {
   SUCCESS_MOVE_FILE: (filename, dirname) =>
     `File "${filename}" was moved to "${dirname}" successfully`,
   SUCCESS_DELETE: (path) => `File "${path}" was deleted successfully`,
+  SUCCESS_COMPRESS: (filename, compressedPath) =>
+    `File "${filename}" was compressed to ${compressedPath} successfully`,
+  SUCCESS_DECOMPRESS: (filename, destinationPath) =>
+    `File "${filename}" was decompressed to "${destinationPath}" successfully`,
 };
 
 export const ERROR_MESSAGES = {
