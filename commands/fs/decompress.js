@@ -1,8 +1,8 @@
 import fs from "fs";
 import path from "path";
 import zlib from "zlib";
-import { ERROR_MESSAGES } from "../../constants/fsMessages.js";
 import { pipeline } from "stream";
+import { ERROR_MESSAGES } from "../../constants/fsMessages.js";
 
 export async function decompress(args) {
   if (args.length !== 2) {
