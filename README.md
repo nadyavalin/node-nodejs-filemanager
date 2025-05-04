@@ -4,6 +4,18 @@
 
 This is a Node.js-based File Manager that provides a Command Line Interface (CLI) for performing file and directory operations, retrieving operating system information, calculating file hashes, and compressing/decompressing files using the Streams API.
 
+## Installation
+
+1. Clone this repository:
+```
+git clone https://github.com/nadyavalin/node-nodejs-filemanager.git
+```
+2. Go to the project folder:
+```
+cd node-nodejs-filemanager
+```
+
+
 ## Technical Requirements
 
 - **Node.js Version**: Uses Node.js 22.x.x (22.14.0 or higher).
@@ -13,7 +25,9 @@ This is a Node.js-based File Manager that provides a Command Line Interface (CLI
 
 Run the program using the following npm script:
 
-`npm run start -- --username=your_username`
+```
+npm run start -- --username=your_username
+```
 
 Replace `your_username` with your preferred username.
 
@@ -52,14 +66,8 @@ Replace `your_username` with your preferred username.
 ### Command Input
 
 - Enter commands in the console and press `Enter` to execute.
-- Invalid input or unknown operations result in:
-  ```
-  Invalid input
-  ```
-- Operation failures (e.g., non-existent file) result in:
-  ```
-  Operation failed
-  ```
+- Invalid input or unknown operations result in `Invalid input`.
+- Operation failures (e.g., non-existent file) result in `Operation failed`.
 - Users can enter another command after any error.
 
 ## Available Commands
