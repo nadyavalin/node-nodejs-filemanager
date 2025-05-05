@@ -1,0 +1,24 @@
+{
+  "name": "nodejs-filemanager",
+  "version": "1.0.0",
+  "description": "File manager",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=22.14.0"
+  },
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nadyavalin/node-nodejs-filemanager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nadyavalin/node-nodejs-filemanager/issues"
+  },
+  "homepage": "https://github.com/nadyavalin/node-nodejs-filemanager#readme"
+}
